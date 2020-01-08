@@ -15,9 +15,8 @@
 
 bool gReverseDirection = true;
 
-//CRGB leds[NUM_LEDS];
-
-//byte noise[NUM_LEDS];  // the noisefield
+// I use adafruit neopixel because the strip is RGBW and expects 32 bit colors
+// FastLED has fast math functions, but is only RGB (24 bit colors) so it doesn't work with my LEDs
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
@@ -27,8 +26,7 @@ void setup()
 {
   delay(1500); // sanity delay
 
-  gPal = PartyColors_p;
-  //gPal = bhw4_018_gp;
+  gPal = honeycomb_gp;
   strip.begin();
   strip.setBrightness(BRIGHTNESS);
 
@@ -37,7 +35,7 @@ void setup()
     // position in palette
     uint8_t hue = i * (255 / NUM_LEDS);
     CRGB color = ColorFromPalette(gPal, hue, BRIGHTNESS, LINEARBLEND);
-    strip.setPixelColor(i, color.r, color.g, color.b);
+    strip.setPixelColor(i, color.r, color.g, color.b, 0);
   }
   strip.show();
 
@@ -73,22 +71,22 @@ void ChangePalettePeriodically()
     {
     case 0:
     {
-      gPal = PartyColors_p;
+      gPal = lava_gp;
       break;
     }
     case 15:
     {
-      gPal = ForestColors_p;
+      gPal = rain_gp;
       break;
     }
     case 30:
     {
-      gPal = LavaColors_p;
+      gPal = starry_green_gp;
       break;
     }
     case 45:
     {
-      gPal = green_crystal_gp;
+      gPal = crackly_ice_gp;
 
       break;
     }
@@ -99,12 +97,12 @@ void ChangePalettePeriodically()
 // COOLING: How much does the air cool as it rises?
 // Less cooling = taller flames.  More cooling = shorter flames.
 // Default 55, suggested range 20-100
-#define COOLING 20
+#define COOLING 50
 
 // SPARKING: What chance (out of 255) is there that a new spark will be lit?
 // Higher chance = more roaring fire.  Lower chance = more flickery fire.
 // Default 120, suggested range 50-200.
-#define SPARKING 200
+#define SPARKING 100
 
 void spacenoise(uint8_t colorIndex)
 {
@@ -151,7 +149,7 @@ void Fire2012WithPalette()
     // for best results with color palettes.
     //byte colorindex = scale8( heat[j], 253);
     byte colorindex = heat[j];
-    CRGB color = ColorFromPalette(gPal, colorindex + 1);
+    CRGB color = ColorFromPalette(gPal, colorindex);
     int pixelnumber;
     if (gReverseDirection)
     {
@@ -161,7 +159,7 @@ void Fire2012WithPalette()
     {
       pixelnumber = j;
     }
-    //strip.setPixelColor(pixelnumber,     color.r, color.g, color.b, scale8(heat[pixelnumber], BRIGHTNESS / 10));
+    //strip.setPixelColor(pixelnumber, color.r, color.g, color.b, scale8(heat[pixelnumber], BRIGHTNESS / 10));
     strip.setPixelColor(pixelnumber, color.r, color.g, color.b, 0);
   }
 }
