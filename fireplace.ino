@@ -9,7 +9,7 @@
 
 #define BRIGHTNESS 224       //
 #define FRAMES_PER_SECOND 64 //
-uint8_t SPEED = 2;           // noise speed
+uint8_t SPEED = 5;           // noise speed
 
 // I use adafruit neopixel because the strip is RGBW and expects 32 bit colors
 // FastLED has fast math functions, but is only RGB (24 bit colors) so it doesn't work with my LEDs
@@ -32,7 +32,7 @@ static uint16_t z;
 // changing these values around to see how it affects the motion of the display.  The
 // higher the value of scale, the more "zoomed out" the noise iwll be.  A value
 // of 1 will be so zoomed in, you'll mostly see solid colors.
-uint16_t SCALE = 511; // scale is set dynamically once we've started up
+uint16_t SCALE = 900; // scale is set dynamically once we've started up
 
 // This is the array that we keep our computed noise values in
 uint8_t noise[NUM_LEDS];
