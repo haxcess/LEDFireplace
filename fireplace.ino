@@ -135,6 +135,11 @@ void ChangePalettePeriodically()
  * case 15: return gPal = HeatColors_p;
  * 
  * } 
+Could also turn this into a playlist style function that moves
+Through an array of palette objects
+Could tune this to a playlist :
+Move through 6 palettes in sequence then repeat the last two forever .
+With blending... 
  * 
   */
 
